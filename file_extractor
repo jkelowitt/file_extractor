@@ -1,14 +1,8 @@
 """
 @author Jackson Elowitt
 
-Given a directory path as "old_path" and a different directory path as "new_path", move every file which isnt a folder
+Given a directory path as "old_path" and a different directory path as "new_path", move every file which isn't a folder
 from old_path to new_path.
-
-:param old_path:
-    The parent folder of every file which you want to move. ***Every file*** which is not a folder will be moved,
-    so be careful.
-:param new_path:
-    The parent folder where every individual file will be placed.
 
 There is no way to undo the move other than manually, so be extremely careful.
 The folders will remain in the old_path.
