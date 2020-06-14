@@ -1,59 +1,51 @@
 """
 @author Jackson Elowitt
 
-
 Given a directory path as "old_path" and a different directory path as "new_path", move every file which isnt a folder
 from old_path to new_path.
 
 :param old_path:
-    The parent folder of every file which you want to move. Every file which is not a folder will be moved,
+    The parent folder of every file which you want to move. ***Every file*** which is not a folder will be moved,
     so be careful.
 :param new_path:
-    The parent folder where every individual file will be placed. The files will no longer be in their folders.
+    The parent folder where every individual file will be placed.
 
-There is no way to undo the move other than manually, so be extremely careful. The folders will remain in the old_path.
+There is no way to undo the move other than manually, so be extremely careful.
+The folders will remain in the old_path.
 """
+from os import path as p
+from os import walk as w
+from shutil import move as m
 
-import os
-import shutil
+# Validate the directories
 
-# Validate the name of the old_path
-while True:
+cont = True
+while cont:
     old_path = input("Please enter the parent directory of all the files you want to move:\n")
-    if os.path.exists(old_path):
-        break
-    else:
+    cont = False if p.exists(old_path) else True
+    if cont:
         print("Directory not found. Please enter a valid directory.")
 
-# Validate the name of the new_path
-while True:
-    new_path = input("Please enter the directory of the destination file:\n")
-    if os.path.exists(old_path):
-        break
-    else:
+cont = True
+while cont:
+    new_path = input("Please enter the directory where all the files should be moved to:\n")
+    cont = False if p.exists(new_path) else True
+    if cont:
         print("Directory not found. Please enter a valid directory.")
 
-d = []  # List of directories
 f = []  # List of files in those directories
 df = []  # List of files with the directories attached to them
 
 print("Running...")
 
 # Get the path, name, and filename of every item from the top, to the lowest file level.
-for (dirpath, dirnames, filenames) in os.walk(old_path):
+for (dirpath, dirnames, filenames) in w(old_path):
     for item in filenames:
         f.append(item)
-        d.append(dirpath)
         df.append(dirpath + "/" + item)
 
 for index, item in enumerate(df):
-    shutil.move(item, fr"{new_path}\{f[index]}")  # Move the file to the new location
+    m(item, fr"{new_path}\{f[index]}")  # Move the file to the new location
 
 total_files = len(f)
 input(f"Complete. Total Files Moved: {total_files}. Press enter to exit.")
-
-
-
-
-
-
